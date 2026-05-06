@@ -23,7 +23,6 @@ conn = mysql.connector.connect(
 
 cursor = conn.cursor()
 
-# BACA CSV
 df = pd.read_csv(
     "cleaned.csv",
     sep=',',
@@ -31,7 +30,6 @@ df = pd.read_csv(
     na_filter=True
 )
 
-# Convert empty strings and NaN to None for MySQL compatibility
 df = df.replace('', None)
 df = df.replace(np.nan, None)
 
