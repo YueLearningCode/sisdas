@@ -1,0 +1,5 @@
+# Ignore entire unused folder
+unused/
+
+# Ignore any folder named unused anywhere in project
+**/unused/**

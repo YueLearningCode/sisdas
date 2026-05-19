@@ -1,0 +1,19 @@
+{
+  "algorithm": "RandomForestRegressor",
+  "model_path": "model\\artifacts\\car_price_model.pkl",
+  "train_path": "dataset\\processed\\train_processed.csv",
+  "test_path": "dataset\\processed\\test_processed.csv",
+  "target_column": "price_rp",
+  "train_rows": 1600,
+  "test_rows": 400,
+  "feature_count": 41,
+  "n_estimators": 300,
+  "max_depth": null,
+  "random_state": 42,
+  "metrics": {
+    "mae": 12285533.33,
+    "rmse": 15870773.9,
+    "r2_score": 0.9327
+  },
+  "target_note": "R2 > 0.80 sudah bagus untuk project mahasiswa."
+}

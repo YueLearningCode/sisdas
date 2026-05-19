@@ -1,0 +1,6 @@
+column,lower_bound,upper_bound,outlier_count,outlier_percent
+year,2002.0,2034.0,0,0.0
+mileage_km,-77448.625,269646.375,0,0.0
+engine_size_cc,0.0,3200.0,0,0.0
+owner_count,-0.5,3.5,0,0.0
+price_rp,-19500000.0,376500000.0,0,0.0
