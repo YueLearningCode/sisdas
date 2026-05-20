@@ -21,6 +21,7 @@ NUMERIC_FEATURES = [
 ]
 
 CATEGORICAL_FEATURES = [
+    "car_name",
     "brand",
     "transmission",
     "fuel_type",
@@ -30,6 +31,20 @@ CATEGORICAL_FEATURES = [
 ]
 
 ALL_FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES
+
+FEATURE_LABELS = {
+    "car_name": "Nama Mobil",
+    "brand": "Brand",
+    "year": "Tahun",
+    "mileage_km": "Kilometer",
+    "engine_size_cc": "Mesin",
+    "owner_count": "Jumlah Pemilik",
+    "transmission": "Transmisi",
+    "fuel_type": "Bahan Bakar",
+    "condition": "Kondisi",
+    "location": "Lokasi",
+    "color": "Warna",
+}
 
 
 app = Flask(__name__)
@@ -119,8 +134,12 @@ def compare_market_price(payload, predicted_price):
         }
 
     comparable = market_df.copy()
+    car_name = payload.get("car_name")
     brand = payload.get("brand")
     year = pd.to_numeric(payload.get("year"), errors="coerce")
+
+    if car_name:
+        comparable = comparable[comparable["car_name"] == car_name]
 
     if brand:
         comparable = comparable[comparable["brand"] == brand]
@@ -181,24 +200,42 @@ def get_price_distribution():
     return distribution
 
 
-def format_feature_name(feature):
-    cleaned = feature.replace("numeric__", "").replace("categorical__", "")
-    cleaned = cleaned.replace("_", " ")
-    return cleaned.title()
-
-
 def get_feature_importance(limit=6):
     if not FEATURE_IMPORTANCE_PATH.exists():
         return []
 
-    feature_importance = pd.read_csv(FEATURE_IMPORTANCE_PATH).head(limit)
+    feature_importance = pd.read_csv(FEATURE_IMPORTANCE_PATH)
+    grouped_importance = {feature: 0.0 for feature in ALL_FEATURES}
+
+    for _, row in feature_importance.iterrows():
+        raw_feature = row["feature"]
+        importance = float(row["importance"])
+
+        if raw_feature.startswith("numeric__"):
+            feature_name = raw_feature.replace("numeric__", "", 1)
+            grouped_importance[feature_name] = grouped_importance.get(feature_name, 0.0) + importance
+            continue
+
+        if raw_feature.startswith("categorical__"):
+            encoded_feature = raw_feature.replace("categorical__", "", 1)
+            for original_feature in CATEGORICAL_FEATURES:
+                if encoded_feature.startswith(f"{original_feature}_"):
+                    grouped_importance[original_feature] += importance
+                    break
+
+    sorted_importance = sorted(
+        grouped_importance.items(),
+        key=lambda item: item[1],
+        reverse=True,
+    )[:limit]
+
     return [
         {
-            "feature": format_feature_name(row["feature"]),
-            "importance": round(float(row["importance"]), 4),
-            "percentage": round(float(row["importance"]) * 100, 1),
+            "feature": FEATURE_LABELS.get(feature, feature),
+            "importance": round(float(importance), 4),
+            "percentage": round(float(importance) * 100, 1),
         }
-        for _, row in feature_importance.iterrows()
+        for feature, importance in sorted_importance
     ]
 
 
@@ -257,4 +294,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5001, debug=True)

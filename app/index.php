@@ -122,31 +122,57 @@
         }
 
         .team-card {
-            height: 100%;
+            position: relative;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
             border: 1px solid var(--line);
             border-radius: 8px;
-            padding: 18px;
-            background: white;
+            background: #e5edf3;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
         }
 
         .team-photo {
-            width: 96px;
-            height: 128px;
-            border-radius: 6px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 3px solid var(--soft);
-            margin-bottom: 14px;
+            display: block;
+            transition: transform 0.28s ease;
+        }
+
+        .team-info {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px 14px;
+            color: white;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0), rgba(15, 23, 42, 0.88));
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.28s ease, opacity 0.28s ease;
+        }
+
+        .team-card:hover .team-photo,
+        .team-card:focus-within .team-photo {
+            transform: scale(1.04);
+        }
+
+        .team-card:hover .team-info,
+        .team-card:focus-within .team-info {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .team-name {
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
         }
 
         .team-nim {
-            color: var(--muted);
             font-size: 14px;
             margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.86);
         }
 
         .text-muted-custom {
@@ -211,13 +237,57 @@
                                 </div>
 
                                 <div class="col-md-6">
+                                    <label for="car_name" class="form-label">Nama Mobil</label>
+                                    <select id="car_name" name="car_name" class="form-select" required>
+                                        <option value="Daihatsu Ayla">Daihatsu Ayla</option>
+                                        <option value="Daihatsu Sigra">Daihatsu Sigra</option>
+                                        <option value="Daihatsu Terios">Daihatsu Terios</option>
+                                        <option value="Daihatsu Xenia">Daihatsu Xenia</option>
+                                        <option value="Honda Brio">Honda Brio</option>
+                                        <option value="Honda City">Honda City</option>
+                                        <option value="Honda CR-V">Honda CR-V</option>
+                                        <option value="Honda HR-V">Honda HR-V</option>
+                                        <option value="Honda Jazz">Honda Jazz</option>
+                                        <option value="Honda Mobilio">Honda Mobilio</option>
+                                        <option value="Hyundai Creta">Hyundai Creta</option>
+                                        <option value="Hyundai Ioniq">Hyundai Ioniq</option>
+                                        <option value="Hyundai Stargazer">Hyundai Stargazer</option>
+                                        <option value="Mazda CX-5">Mazda CX-5</option>
+                                        <option value="Mazda Mazda2">Mazda Mazda2</option>
+                                        <option value="Mazda Mazda3">Mazda Mazda3</option>
+                                        <option value="Mitsubishi Outlander">Mitsubishi Outlander</option>
+                                        <option value="Mitsubishi Pajero">Mitsubishi Pajero</option>
+                                        <option value="Mitsubishi Xpander">Mitsubishi Xpander</option>
+                                        <option value="Nissan Livina">Nissan Livina</option>
+                                        <option value="Nissan March">Nissan March</option>
+                                        <option value="Nissan X-Trail">Nissan X-Trail</option>
+                                        <option value="Suzuki Baleno">Suzuki Baleno</option>
+                                        <option value="Suzuki Ertiga">Suzuki Ertiga</option>
+                                        <option value="Suzuki Karimun">Suzuki Karimun</option>
+                                        <option value="Suzuki XL7">Suzuki XL7</option>
+                                        <option value="Toyota Agya">Toyota Agya</option>
+                                        <option value="Toyota Avanza" selected>Toyota Avanza</option>
+                                        <option value="Toyota Calya">Toyota Calya</option>
+                                        <option value="Toyota Fortuner">Toyota Fortuner</option>
+                                        <option value="Toyota Innova">Toyota Innova</option>
+                                        <option value="Toyota Rush">Toyota Rush</option>
+                                        <option value="Toyota Yaris">Toyota Yaris</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label for="year" class="form-label">Tahun</label>
                                     <input id="year" name="year" type="number" class="form-control" min="2000" max="2026" value="2020" required>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="mileage_km" class="form-label">Kilometer</label>
                                     <input id="mileage_km" name="mileage_km" type="number" class="form-control" min="0" step="1000" value="50000" required>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <label for="owner_count" class="form-label">Jumlah Pemilik</label>
+                                    <input id="owner_count" name="owner_count" type="number" class="form-control" min="1" max="5" value="1">
                                 </div>
 
                                 <div class="col-md-6">
@@ -296,11 +366,6 @@
                                         <option value="Red">Red</option>
                                         <option value="Blue">Blue</option>
                                     </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="owner_count" class="form-label">Jumlah Pemilik</label>
-                                    <input id="owner_count" name="owner_count" type="number" class="form-control" min="1" max="5" value="1">
                                 </div>
 
                                 <div class="col-12">
@@ -405,51 +470,63 @@
                     </div>
 
                     <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Grahadi Arma W">
-                                <div class="team-name">Grahadi Arma W</div>
-                                <p class="team-nim">NIM 2403111017</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/arma.jpeg" alt="Foto profil Grahadi Arma W">
+                                <div class="team-info">
+                                    <div class="team-name">Grahadi Arma W</div>
+                                    <p class="team-nim">NIM 2403111017</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Mhd Irsal">
-                                <div class="team-name">Mhd Irsal</div>
-                                <p class="team-nim">NIM 2403114255</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/irsal.jpeg" alt="Foto profil Mhd Irsal">
+                                <div class="team-info">
+                                    <div class="team-name">Mhd Irsal</div>
+                                    <p class="team-nim">NIM 2403114255</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Michael Elfredo P">
-                                <div class="team-name">Michael Elfredo P</div>
-                                <p class="team-nim">NIM 2403112307</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/michel.jpeg" alt="Foto profil Michael Elfredo P">
+                                <div class="team-info">
+                                    <div class="team-name">Michael Elfredo P</div>
+                                    <p class="team-nim">NIM 2403112307</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Nurul Triatika">
-                                <div class="team-name">Nurul Triatika</div>
-                                <p class="team-nim">NIM 2403111759</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/nurul.jpeg" alt="Foto profil Nurul Triatika">
+                                <div class="team-info">
+                                    <div class="team-name">Nurul Triatika</div>
+                                    <p class="team-nim">NIM 2403111759</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Puan Nabila Risty">
-                                <div class="team-name">Puan Nabila Risty</div>
-                                <p class="team-nim">NIM 2403111378</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/puan.jpeg" alt="Foto profil Puan Nabila Risty">
+                                <div class="team-info">
+                                    <div class="team-name">Puan Nabila Risty</div>
+                                    <p class="team-nim">NIM 2403111378</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
-                            <div class="team-card text-center">
-                                <img class="team-photo" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&h=400&q=80" alt="Foto profil Rasyid Saputra">
-                                <div class="team-name">Rasyid Saputra</div>
-                                <p class="team-nim">NIM 2403127126</p>
+                        <div class="col-md-6 col-lg-2">
+                            <div class="team-card" tabindex="0">
+                                <img class="team-photo" src="asset/rasyid.jpeg" alt="Foto profil Rasyid Saputra">
+                                <div class="team-info">
+                                    <div class="team-name">Rasyid Saputra</div>
+                                    <p class="team-nim">NIM 2403127126</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -459,10 +536,47 @@
     </main>
 
     <script>
-        const API_BASE_URL = "http://127.0.0.1:5000";
+        const API_BASE_URL = "http://127.0.0.1:5001";
         const HISTORY_KEY = "carPricePredictionHistory";
+        const CAR_BRAND_MAP = {
+            "Daihatsu Ayla": "Daihatsu",
+            "Daihatsu Sigra": "Daihatsu",
+            "Daihatsu Terios": "Daihatsu",
+            "Daihatsu Xenia": "Daihatsu",
+            "Honda Brio": "Honda",
+            "Honda City": "Honda",
+            "Honda CR-V": "Honda",
+            "Honda HR-V": "Honda",
+            "Honda Jazz": "Honda",
+            "Honda Mobilio": "Honda",
+            "Hyundai Creta": "Hyundai",
+            "Hyundai Ioniq": "Hyundai",
+            "Hyundai Stargazer": "Hyundai",
+            "Mazda CX-5": "Mazda",
+            "Mazda Mazda2": "Mazda",
+            "Mazda Mazda3": "Mazda",
+            "Mitsubishi Outlander": "Mitsubishi",
+            "Mitsubishi Pajero": "Mitsubishi",
+            "Mitsubishi Xpander": "Mitsubishi",
+            "Nissan Livina": "Nissan",
+            "Nissan March": "Nissan",
+            "Nissan X-Trail": "Nissan",
+            "Suzuki Baleno": "Suzuki",
+            "Suzuki Ertiga": "Suzuki",
+            "Suzuki Karimun": "Suzuki",
+            "Suzuki XL7": "Suzuki",
+            "Toyota Agya": "Toyota",
+            "Toyota Avanza": "Toyota",
+            "Toyota Calya": "Toyota",
+            "Toyota Fortuner": "Toyota",
+            "Toyota Innova": "Toyota",
+            "Toyota Rush": "Toyota",
+            "Toyota Yaris": "Toyota"
+        };
         const form = document.getElementById("predictForm");
         const button = document.getElementById("submitButton");
+        const brandInput = document.getElementById("brand");
+        const carNameInput = document.getElementById("car_name");
         const predictedPrice = document.getElementById("predictedPrice");
         const confidenceLabel = document.getElementById("confidenceLabel");
         const r2Score = document.getElementById("r2Score");
@@ -513,7 +627,7 @@
 
             historyBody.innerHTML = history.map((item) => `
                 <tr>
-                    <td>${item.brand}</td>
+                    <td>${item.car_name || item.brand}</td>
                     <td>${item.year}</td>
                     <td>${Number(item.mileage_km).toLocaleString("id-ID")} km</td>
                     <td>${formatRupiah(item.predicted_price)}</td>
@@ -542,6 +656,26 @@
                     </div>
                 `;
             }).join("");
+        }
+
+        function updateCarNameOptions(selectedCarName = null) {
+            const selectedBrand = brandInput.value;
+            const matchingCarNames = Object.keys(CAR_BRAND_MAP).filter(
+                (carName) => CAR_BRAND_MAP[carName] === selectedBrand
+            );
+
+            carNameInput.innerHTML = matchingCarNames.map((carName) => (
+                `<option value="${carName}">${carName}</option>`
+            )).join("");
+
+            if (selectedCarName && matchingCarNames.includes(selectedCarName)) {
+                carNameInput.value = selectedCarName;
+                return;
+            }
+
+            if (matchingCarNames.length > 0) {
+                carNameInput.value = matchingCarNames[0];
+            }
         }
 
         function renderFeatureImportance(features) {
@@ -583,6 +717,7 @@
             const formData = new FormData(form);
 
             const payload = {
+                car_name: formData.get("car_name"),
                 brand: formData.get("brand"),
                 year: Number(formData.get("year")),
                 mileage_km: Number(formData.get("mileage_km")),
@@ -621,6 +756,7 @@
                 marketDetail.textContent = `Rata-rata pasar ${formatRupiah(data.market_comparison.average_price)} dari ${data.market_comparison.sample_count} data pembanding.`;
 
                 saveHistory({
+                    car_name: payload.car_name,
                     brand: payload.brand,
                     year: payload.year,
                     mileage_km: payload.mileage_km,
@@ -643,6 +779,19 @@
             renderHistory();
         });
 
+        carNameInput.addEventListener("change", function() {
+            const selectedBrand = CAR_BRAND_MAP[carNameInput.value];
+            if (selectedBrand) {
+                brandInput.value = selectedBrand;
+                updateCarNameOptions(carNameInput.value);
+            }
+        });
+
+        brandInput.addEventListener("change", function() {
+            updateCarNameOptions();
+        });
+
+        updateCarNameOptions("Toyota Avanza");
         loadStats();
         renderHistory();
     </script>

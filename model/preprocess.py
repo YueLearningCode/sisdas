@@ -15,6 +15,7 @@ DEFAULT_OUTPUT_DIR = Path("dataset/processed")
 DEFAULT_TARGET_COLUMN = "price_rp"
 
 CATEGORICAL_COLUMNS = [
+    "car_name",
     "brand",
     "transmission",
     "fuel_type",
@@ -24,7 +25,6 @@ CATEGORICAL_COLUMNS = [
 ]
 
 DEFAULT_DROP_COLUMNS = [
-    "car_name",
     "instalment_rp_monthly",
 ]
 
